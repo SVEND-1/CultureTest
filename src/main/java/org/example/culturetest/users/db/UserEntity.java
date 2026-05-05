@@ -3,6 +3,8 @@ package org.example.culturetest.users.db;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Setter
 @Getter
@@ -29,5 +31,11 @@ public class UserEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "private_note", length = 1000)
+    private String privateNote;
 
 }
