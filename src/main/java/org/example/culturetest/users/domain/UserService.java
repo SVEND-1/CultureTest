@@ -3,8 +3,18 @@ package org.example.culturetest.users.domain;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.culturetest.answerOptions.db.AnswerOptionEntity;
 import org.example.culturetest.config.JwtTokenProvider;
+import org.example.culturetest.questions.db.QuestionEntity;
+import org.example.culturetest.questions.db.QuestionType;
+import org.example.culturetest.testAttempts.api.dto.response.TestAttemptProfile;
+import org.example.culturetest.testAttempts.db.TestAttemptEntity;
+import org.example.culturetest.testAttempts.db.TestAttemptsRepository;
+import org.example.culturetest.testAttempts.domain.mapper.TestAttemptMapper;
+import org.example.culturetest.users.api.dto.users.User;
 import org.example.culturetest.users.api.dto.users.request.UserCreateRequest;
+import org.example.culturetest.users.api.dto.users.response.UserDefaultResponse;
+import org.example.culturetest.users.api.dto.users.response.UserProfileResponse;
 import org.example.culturetest.users.api.dto.users.response.UserRegistrationResponse;
 import org.example.culturetest.users.db.UserEntity;
 import org.example.culturetest.users.db.UserRepository;
@@ -14,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,6 +34,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final JwtTokenProvider jwtTokenProvider;
+    private final TestAttemptsRepository testAttemptsRepository;
+    private final TestAttemptMapper testAttemptMapper;
 
     public UserEntity getCurrentUser() {
         String token = jwtTokenProvider.getCurrentToken();
@@ -30,6 +43,10 @@ public class UserService {
         UserEntity user = userRepository.findByEmailEqualsIgnoreCase(email);
         notFoundUser(user);
         return user;
+    }
+
+    public List<UserDefaultResponse> findAll(){
+        return userMapper.convertEntitiesToUserDefaultResponses(userRepository.findAll());
     }
 
     public UserEntity findUserById(Long id) {
@@ -44,6 +61,65 @@ public class UserService {
 
         UserEntity user = userRepository.findByEmailEqualsIgnoreCase(email);
         return userMapper.convertEntityToDto(user);
+    }
+
+    public UserProfileResponse getUserProfile() {
+        try {
+            UserEntity user = getCurrentUser();
+            List<TestAttemptEntity> completedAttempts = testAttemptsRepository
+                    .findAllByUserId(user.getId())
+                    .stream()
+                    .filter(a -> a.getCompletedAt() != null)
+                    .toList();
+
+            double totalScore = completedAttempts.stream()
+                    .mapToDouble(TestAttemptEntity::getTotalScore)
+                    .average()
+                    .orElse(0);
+
+            double totalScoreThinking = calcAvgByType(completedAttempts, QuestionType.THINKING);
+            double totalScoreAffiliation = calcAvgByType(completedAttempts, QuestionType.AFFILIATION);
+            double totalScoreFlexibility = calcAvgByType(completedAttempts, QuestionType.FLEXIBILITY);
+            double totalScoreExperience = calcAvgByType(completedAttempts, QuestionType.EXPERIENCE);
+
+            List<TestAttemptProfile> attempts = completedAttempts.stream()
+                    .map(testAttemptMapper::convertEntityToProfile)
+                    .toList();
+
+            return new UserProfileResponse(
+                    user.getName(),
+                    user.getEmail(),
+                    attempts,
+                    totalScore,
+                    totalScoreThinking,
+                    totalScoreAffiliation,
+                    totalScoreFlexibility,
+                    totalScoreExperience
+            );
+        }catch (Exception e){
+            log.error("Не получилось загрузить профиль,ex={}",e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private double calcAvgByType(List<TestAttemptEntity> attempts, QuestionType type) {
+        return attempts.stream()
+                .mapToDouble(attempt -> {
+                    List<QuestionEntity> questions = attempt.getTest().getQuestions()
+                            .stream()
+                            .filter(q -> q.getType() == type)
+                            .toList();
+
+                    if (questions.isEmpty()) return 0;
+                    long correct = questions.stream()
+                            .filter(q -> q.getAnswerOptions().stream()
+                                    .anyMatch(AnswerOptionEntity::getIsCorrect))
+                            .count();
+
+                    return (double) correct / questions.size() * 100;
+                })
+                .average()
+                .orElse(0);
     }
 
     public UserRegistrationResponse save(UserCreateRequest request) {

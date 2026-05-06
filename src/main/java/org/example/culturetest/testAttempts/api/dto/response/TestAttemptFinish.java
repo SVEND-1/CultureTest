@@ -1,6 +1,6 @@
 package org.example.culturetest.testAttempts.api.dto.response;
 
-public record TestFinish(
+public record TestAttemptFinish(
         Double totalScore,
         Double scoreThinking,
         Double scoreAffiliation,

@@ -31,30 +31,4 @@ public class TestController {
     public ResponseEntity<TestResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(testService.findById(id));
     }
-
-    @Operation(summary = "Создание теста")
-    @PostMapping
-    public ResponseEntity<String> create(@RequestBody CreateTestRequest request) {
-        return ResponseEntity.ok(testService.create(request));
-    }
-
-    @Operation(summary = "Обновление теста")
-    @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id,
-                                         @RequestBody CreateTestRequest request) {
-        return ResponseEntity.ok(testService.update(id, request));
-    }
-
-    @Operation(summary = "Смена статуса теста (активен/неактивен)")
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<String> setActive(@PathVariable Long id,
-                                            @RequestParam Boolean isActive) {
-        return ResponseEntity.ok(testService.setActive(id, isActive));
-    }
-
-    @Operation(summary = "Удаление теста")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(testService.delete(id));
-    }
 }

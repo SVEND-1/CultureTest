@@ -25,7 +25,7 @@ public class AnswerUserService {
     private final TestAttemptMapper testAttemptMapper;
 
     @Transactional//TODO ПЕРЕПИСАТЬ ЕСЛИ УБЕРУ КАСКАД
-    public TestAttempt submitAnswer(Long attemptId, SubmitAnswerRequest request) {
+    public TestAttempt submitAnswer(Long attemptId, SubmitAnswerRequest request) {//TODO добавить проверку что на вопрос ещё не было ответа
         try {
             TestAttemptEntity attempt = testAttemptService.findByIdEntity(attemptId);
 

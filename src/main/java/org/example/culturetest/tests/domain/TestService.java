@@ -3,12 +3,15 @@ package org.example.culturetest.tests.domain;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.culturetest.testAttempts.db.TestAttemptsRepository;
 import org.example.culturetest.tests.api.dto.Test;
 import org.example.culturetest.tests.api.dto.request.CreateTestRequest;
 import org.example.culturetest.tests.api.dto.response.TestResponse;
 import org.example.culturetest.tests.db.TestEntity;
 import org.example.culturetest.tests.db.TestRepository;
 import org.example.culturetest.tests.domain.mapper.TestMapper;
+import org.example.culturetest.users.db.UserEntity;
+import org.example.culturetest.users.domain.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,18 +24,30 @@ public class TestService {//TODO ДОБАВИТЬ DTO
 
     private final TestRepository testRepository;
     private final TestMapper testMapper;
+    private final UserService userService;
+    private final TestAttemptsRepository testAttemptsRepository;
 
     public TestEntity findByIdEntity(Long id) {
         return testRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Тест не найден"));
     }
 
+    @Transactional
     public TestResponse findById(Long id) {
-        return testMapper.convertDTOToResponse(findByIdEntity(id));
+        TestEntity entity = findByIdEntity(id);
+        boolean isDone = hasUserCompletedTest(id);
+        TestResponse response = testMapper.convertDTOToResponse(entity);
+
+        return new TestResponse(
+                response.name(),
+                response.description(),
+                isDone,
+                response.questions()
+        );
     }
 
     @Transactional(readOnly = true)
-    public List<Test> findAll() {//TODO может сделать пометку пройден или нет
+    public List<Test> findAll() {
         try {
             return testMapper.convertEntityListToDTO(testRepository.findByIsActive(true));
         } catch (Exception e) {
@@ -84,7 +99,6 @@ public class TestService {//TODO ДОБАВИТЬ DTO
         }
     }
 
-    @Transactional
     public String delete(Long id) {
         try {
             testRepository.deleteById(id);
@@ -95,4 +109,11 @@ public class TestService {//TODO ДОБАВИТЬ DTO
             throw new RuntimeException(e);
         }
     }
+
+    public boolean hasUserCompletedTest(Long testId) {
+        UserEntity user = userService.getCurrentUser();
+        return testAttemptsRepository
+                .existsByUserIdAndTestIdAndCompletedAtIsNotNull(user.getId(), testId);
+    }
+
 }

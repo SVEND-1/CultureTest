@@ -7,7 +7,7 @@ import java.util.List;
 public record TestResponse(
         String name,
         String description,
-        Boolean isActive,
+        Boolean isDone,
         List<Question> questions
 ) {
 }

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface TestAttemptsRepository extends JpaRepository<TestAttemptEntity,Long> {
     List<TestAttemptEntity> findAllByUserId(Long userId);
+    boolean existsByUserIdAndTestIdAndCompletedAtIsNotNull(Long userId, Long testId);
 }

@@ -30,24 +30,4 @@ public class QuestionController {
     public ResponseEntity<Question> getById(@PathVariable Long id) {
         return ResponseEntity.ok(questionService.findById(id));
     }
-
-    @Operation(summary = "Добавление вопроса в тест")
-    @PostMapping("/test/{testId}")
-    public ResponseEntity<String> addToTest(@PathVariable Long testId,
-                                            @RequestBody CreateQuestionRequest request) {
-        return ResponseEntity.ok(questionService.addQuestionToTest(testId, request));
-    }
-
-    @Operation(summary = "Обновление вопроса")
-    @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id,
-                                         @RequestBody CreateQuestionRequest request) {
-        return ResponseEntity.ok(questionService.update(id, request));
-    }
-
-    @Operation(summary = "Удаление вопроса")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(questionService.delete(id));
-    }
 }

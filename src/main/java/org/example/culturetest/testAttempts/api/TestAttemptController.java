@@ -3,10 +3,9 @@ package org.example.culturetest.testAttempts.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.example.culturetest.answerUsers.api.dto.request.SubmitAnswerRequest;
 import org.example.culturetest.testAttempts.api.dto.TestAttempt;
 import org.example.culturetest.testAttempts.api.dto.request.StartAttemptRequest;
-import org.example.culturetest.testAttempts.api.dto.response.TestFinish;
+import org.example.culturetest.testAttempts.api.dto.response.TestAttemptFinish;
 import org.example.culturetest.testAttempts.domain.TestAttemptService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +40,7 @@ public class TestAttemptController {
 
     @Operation(summary = "Завершить тест")
     @PostMapping("/{attemptId}/finish")
-    public ResponseEntity<TestFinish> finish(@PathVariable Long attemptId) {
+    public ResponseEntity<TestAttemptFinish> finish(@PathVariable Long attemptId) {
         return ResponseEntity.ok(testAttemptService.finish(attemptId));
     }
 }

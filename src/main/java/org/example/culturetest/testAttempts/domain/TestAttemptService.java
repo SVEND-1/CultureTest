@@ -1,14 +1,12 @@
 package org.example.culturetest.testAttempts.domain;
 
 import org.example.culturetest.answerOptions.db.AnswerOptionEntity;
-import org.example.culturetest.answerUsers.api.dto.AnswerUser;
-import org.example.culturetest.answerUsers.api.dto.request.SubmitAnswerRequest;
 import org.example.culturetest.answerUsers.db.AnswerUserEntity;
 import org.example.culturetest.questions.db.QuestionEntity;
 import org.example.culturetest.questions.db.QuestionType;
 import org.example.culturetest.testAttempts.api.dto.TestAttempt;
 import org.example.culturetest.testAttempts.api.dto.request.StartAttemptRequest;
-import org.example.culturetest.testAttempts.api.dto.response.TestFinish;
+import org.example.culturetest.testAttempts.api.dto.response.TestAttemptFinish;
 import org.example.culturetest.testAttempts.db.TestAttemptEntity;
 import org.example.culturetest.testAttempts.db.TestAttemptsRepository;
 import org.example.culturetest.tests.domain.TestService;
@@ -90,7 +88,7 @@ public class TestAttemptService {
     }
 
     @Transactional
-    public TestFinish finish(Long attemptId) {
+    public TestAttemptFinish finish(Long attemptId) {
         try {
             TestAttemptEntity attempt = findByIdEntity(attemptId);
 
@@ -119,11 +117,11 @@ public class TestAttemptService {
         }
     }
 
-    private TestFinish mapperFinish(List<QuestionEntity> allQuestion, double totalScore) {
+    private TestAttemptFinish mapperFinish(List<QuestionEntity> allQuestion, double totalScore) {
         Map<QuestionType, List<QuestionEntity>> questionsByType = allQuestion.stream()
                 .collect(Collectors.groupingBy(QuestionEntity::getType));
 
-        return new TestFinish(
+        return new TestAttemptFinish(
                 totalScore,
                 calculateScoreForType(questionsByType, QuestionType.THINKING),
                 calculateScoreForType(questionsByType, QuestionType.AFFILIATION),
