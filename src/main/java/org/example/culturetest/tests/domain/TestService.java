@@ -32,9 +32,9 @@ public class TestService {//TODO ДОБАВИТЬ DTO
     }
 
     @Transactional(readOnly = true)
-    public List<Test> findAll() {
+    public List<Test> findAll() {//TODO может сделать пометку пройден или нет
         try {
-            return testMapper.convertEntityListToDTO(testRepository.findAll());
+            return testMapper.convertEntityListToDTO(testRepository.findByIsActive(true));
         } catch (Exception e) {
             log.error("Не удалось получить список тестов, ex={}", e.getMessage());
             throw new RuntimeException(e);

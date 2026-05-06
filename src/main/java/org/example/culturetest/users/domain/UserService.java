@@ -13,6 +13,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -52,6 +54,7 @@ public class UserService {
                     .name(request.name())
                     .password(request.password())
                     .role(request.role())
+                    .createdAt(LocalDateTime.now())
                     .build();
             UserEntity saved = userRepository.save(savedUser);
             return userMapper.convertEntityToDto(saved);

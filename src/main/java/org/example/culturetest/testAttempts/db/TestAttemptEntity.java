@@ -3,6 +3,8 @@ package org.example.culturetest.testAttempts.db;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.culturetest.answerUsers.db.AnswerUserEntity;
+import org.example.culturetest.tests.db.TestEntity;
+import org.example.culturetest.users.db.UserEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,4 +37,12 @@ public class TestAttemptEntity {
 
     @OneToMany(mappedBy = "testAttempt", cascade = CascadeType.ALL, fetch = FetchType.EAGER)//TODO поменять на lazy
     private List<AnswerUserEntity> userAnswers = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "test_id", nullable = false)
+    private TestEntity test;
 }
