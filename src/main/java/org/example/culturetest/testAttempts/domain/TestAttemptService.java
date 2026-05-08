@@ -45,6 +45,10 @@ public class TestAttemptService {
         return testAttemptMapper.convertEntityToDTO(findByIdEntity(id));
     }
 
+    public List<TestAttempt> findAll() {
+        return testAttemptMapper.convertEntityListToDTO(testAttemptRepository.findAll());
+    }
+
     @Transactional(readOnly = true)
     public List<TestAttempt> findAllByUser(Long userId) {
         try {
