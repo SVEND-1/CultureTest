@@ -63,6 +63,7 @@ public class UserService {
         return userMapper.convertEntityToDto(user);
     }
 
+    @Transactional
     public UserProfileResponse getUserProfile() {
         try {
             UserEntity user = getCurrentUser();
