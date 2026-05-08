@@ -12,7 +12,6 @@ public class GroqConfig {
 
     @Bean
     public OpenAiApi openAiApi(@Value("${spring.ai.openai.api-key}") String apiKey) {
-        // Указываем правильный URL без дублирования
         String baseUrl = "https://api.groq.com/openai/v1";
         return new OpenAiApi(baseUrl, apiKey);
     }

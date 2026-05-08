@@ -15,4 +15,6 @@ public interface TestMapper {
     TestResponse convertDTOToResponse(TestEntity entity);
 
     List<Test> convertEntityListToDTO(List<TestEntity> entities);
+
+    List<TestResponse> convertEntityListToResponse(List<TestEntity> entities);
 }

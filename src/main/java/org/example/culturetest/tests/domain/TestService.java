@@ -56,6 +56,16 @@ public class TestService {//TODO ДОБАВИТЬ DTO
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<TestResponse> findAllByIA() {
+        try {
+            return testMapper.convertEntityListToResponse(testRepository.findAll());
+        }catch (Exception e) {
+            log.error("Не удалось получить список, ex={}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     @Transactional
     public Test create(CreateTestRequest request) {
         try {

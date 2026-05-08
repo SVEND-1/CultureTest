@@ -2,6 +2,8 @@ package org.example.culturetest.users.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.example.culturetest.ai.api.dto.response.UserAI;
+import org.example.culturetest.ai.domain.AIService;
 import org.example.culturetest.questions.api.dto.request.CreateQuestionRequest;
 import org.example.culturetest.questions.domain.QuestionService;
 import org.example.culturetest.tests.api.dto.Test;
@@ -13,6 +15,8 @@ import org.example.culturetest.users.domain.AdminService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class AdminController {
     private final TestService testService;
     private final QuestionService questionService;
     private final AdminService adminService;
+    private final AIService aiService;
 
     @Operation(summary = "Профиль админа")
     @GetMapping
@@ -46,6 +51,13 @@ public class AdminController {
             @RequestParam String comment
     ){
         return ResponseEntity.ok(adminService.writeComment(userId,comment));
+    }
+
+    @PostMapping("/ai")
+    public ResponseEntity<List<UserAI>> ai(
+            @RequestParam String role
+    ){
+        return ResponseEntity.ok(aiService.personSearch(role));
     }
 
     @Operation(summary = "Создание теста")
