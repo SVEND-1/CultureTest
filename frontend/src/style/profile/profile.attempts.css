@@ -1,0 +1,111 @@
+/* ============================================================
+   profile.attempts.css — История попыток тестов
+   ============================================================ */
+
+.attempts-section__title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-white);
+  letter-spacing: -0.2px;
+  margin-bottom: 18px;
+}
+
+/* ── Пустое состояние ── */
+.attempts-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 0;
+}
+
+.attempts-empty__icon {
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+.attempts-empty__text {
+  font-size: 14px;
+  color: var(--color-text-faint);
+}
+
+/* ── Список ── */
+.attempts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.attempt-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(10, 25, 60, 0.5);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.attempt-item:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(15, 35, 80, 0.5);
+}
+
+.attempt-item__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.attempt-item__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.attempt-item__title {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-white);
+  margin-bottom: 2px;
+}
+
+.attempt-item__date {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
+
+.attempt-item__score {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-white);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.attempt-item__score-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text-faint);
+}
+
+@media (max-width: 480px) {
+  .attempt-item { padding: 12px 14px; }
+  .attempt-item__score { font-size: 16px; }
+}

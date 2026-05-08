@@ -1,0 +1,147 @@
+/* ============================================================
+   auth.buttons.css — Кнопки: submit, forgot-password, auth-link
+   ============================================================ */
+
+@import 'auth.variables.css';
+
+/* ── Базовый сброс ── */
+.button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    color var(--transition),
+    transform var(--transition);
+}
+
+.button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Главная кнопка отправки ── */
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--color-primary-mid) 0%, var(--color-primary-light) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: var(--radius-btn);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  box-shadow: var(--shadow-button);
+  margin-top: 4px;
+}
+
+.submit-button:not(:disabled):hover {
+  background: linear-gradient(135deg, #2554cc 0%, #3b82f6 100%);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
+
+.submit-button:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-button);
+}
+
+@media (max-width: 768px) {
+  .submit-button {
+    padding: 13px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .submit-button {
+    padding: 11px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+}
+
+/* ── «Забыли пароль?» ── */
+.forgot-password {
+  text-align: right;
+  margin-bottom: 22px;
+}
+
+.forgot-button {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  padding: 4px 2px;
+  text-decoration: none;
+}
+
+.forgot-button:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 480px) {
+  .forgot-password {
+    margin-bottom: 18px;
+  }
+
+  .forgot-button {
+    font-size: 12px;
+  }
+}
+
+/* ── Ссылка-кнопка внизу (переключение между страницами) ── */
+.auth-link {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  background: rgba(30, 77, 183, 0.08);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 14px;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
+}
+
+.auth-link:hover {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: var(--color-text-white);
+  transform: translateY(-1px);
+}
+
+.auth-link:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .auth-link {
+    padding: 11px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-link {
+    padding: 10px;
+    font-size: 12.5px;
+    margin-top: 12px;
+    border-radius: 10px;
+  }
+}

@@ -1,0 +1,22 @@
+/* ============================================================
+   auth.index.css — Точка входа: импортирует все CSS-модули
+   ============================================================
+
+   Подключай только этот файл в своём проекте:
+     import './styles/auth.index.css';
+
+   Структура файлов:
+     auth.variables.css      — CSS-переменные, шрифты, базовые стили
+     auth.layout.css         — Контейнер, обёртка, карточка (.auth-form)
+     auth.typography.css     — Заголовки (.auth-title, .auth-title3)
+     auth.fields.css         — Поля ввода, лейблы, иконка глазика
+     auth.buttons.css        — Кнопки submit, forgot, auth-link
+     PasswordStrengthBar.css — Индикатор надёжности пароля
+   ============================================================ */
+
+@import 'auth.variables.css';
+@import 'auth.layout.css';
+@import 'auth.typography.css';
+@import 'auth.fields.css';
+@import 'auth.buttons.css';
+@import 'auth.checkbox.css';

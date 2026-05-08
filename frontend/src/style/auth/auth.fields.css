@@ -1,0 +1,144 @@
+/* ============================================================
+   auth.fields.css — Поля ввода, лейблы, иконка глазика
+   ============================================================ */
+
+@import 'auth.variables.css';
+
+/* ── Группа поля ── */
+.field {
+  position: relative;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+@media (max-width: 480px) {
+  .input-group {
+    margin-bottom: 14px;
+  }
+}
+
+/* ── Лейбл ── */
+.input-label {
+  display: block;
+  font-family: var(--font-display);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+  transition: color var(--transition);
+}
+
+.field:focus-within .input-label {
+  color: var(--color-accent);
+}
+
+@media (max-width: 480px) {
+  .input-label {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+}
+
+/* ── Обёртка для инпута (нужна для глазика) ── */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Само поле ввода ── */
+.input-field {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-input);
+  color: var(--color-text-white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  outline: none;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+  /* Отступ справа, если есть иконка глазика */
+  padding-right: 44px;
+}
+
+.input-field::placeholder {
+  color: var(--color-placeholder);
+  font-weight: 300;
+}
+
+.input-field:focus {
+  background: var(--color-input-bg-focus);
+  border-color: var(--color-border-focus);
+  box-shadow: var(--shadow-input-focus);
+}
+
+/* Скрываем стандартный reveal-иконку в Edge/IE */
+.input-field::-ms-reveal,
+.input-field::-ms-clear {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .input-field {
+    padding: 11px 44px 11px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-field {
+    padding: 10px 40px 10px 12px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+}
+
+/* ── Кнопка-глазик (показать / скрыть пароль) ── */
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-faint);
+  padding: 0;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+
+.password-toggle:hover {
+  color: var(--color-accent);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.password-toggle svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* ── Сообщение об ошибке под полем ── */
+.field-error {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #f87171;
+  font-family: var(--font-body);
+  line-height: 1.4;
+}

@@ -1,0 +1,61 @@
+/* ============================================================
+   auth.typography.css — Заголовки и подзаголовки форм
+   ============================================================ */
+
+@import 'auth.variables.css';
+
+/* ── Главный заголовок ── */
+.auth-title {
+  font-family: var(--font-display);
+  text-align: center;
+  color: var(--color-text-white);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+  line-height: 1.2;
+
+  /* Тонкий градиентный текст */
+  background: linear-gradient(135deg, #e8f0ff 0%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .auth-title {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-title {
+    font-size: 22px;
+  }
+}
+
+/* ── Подзаголовок ── */
+.auth-title3 {
+  font-family: var(--font-body);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .auth-title3 {
+    font-size: 13px;
+    margin-bottom: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-title3 {
+    font-size: 12px;
+    margin-bottom: 22px;
+  }
+}

@@ -6,8 +6,9 @@ import org.example.culturetest.questions.api.dto.request.CreateQuestionRequest;
 import org.example.culturetest.questions.domain.QuestionService;
 import org.example.culturetest.tests.api.dto.request.CreateTestRequest;
 import org.example.culturetest.tests.domain.TestService;
-import org.example.culturetest.users.db.UserRepository;
-import org.example.culturetest.users.domain.UserService;
+import org.example.culturetest.users.api.dto.admin.response.AdminOpenUserProfile;
+import org.example.culturetest.users.api.dto.admin.response.AdminProfile;
+import org.example.culturetest.users.domain.AdminService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,36 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
-    private final UserService userService;
     private final TestService testService;
     private final QuestionService questionService;
+    private final AdminService adminService;
+
+    @Operation(summary = "Профиль админа")
+    @GetMapping
+    public ResponseEntity<AdminProfile> profile() {
+        return ResponseEntity.ok(adminService.profile());
+    }
+
+    @Operation(summary = "Получить профиль пользователя через админа")
+    @GetMapping("/{userId}")
+    public ResponseEntity<AdminOpenUserProfile> profile(@PathVariable Long userId) {
+        return ResponseEntity.ok(adminService.openUserProfile(userId));
+    }
+
+    @Operation(summary = "Назначить пользователя админом")
+    @PostMapping("/{email}")
+    public ResponseEntity<String> setRole(@PathVariable String email) {
+        return ResponseEntity.ok(adminService.setRole(email));
+    }
+
+    @Operation(summary = "Написать комментарий пользователю")
+    @PostMapping("/{userId}")
+    public ResponseEntity<String> setRole(
+            @PathVariable Long userId,
+            @RequestParam String comment
+    ){
+        return ResponseEntity.ok(adminService.writeComment(userId,comment));
+    }
 
     @Operation(summary = "Создание теста")
     @PostMapping("/test")
