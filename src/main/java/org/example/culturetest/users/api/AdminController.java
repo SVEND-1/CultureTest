@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.example.culturetest.questions.api.dto.request.CreateQuestionRequest;
 import org.example.culturetest.questions.domain.QuestionService;
+import org.example.culturetest.tests.api.dto.Test;
 import org.example.culturetest.tests.api.dto.request.CreateTestRequest;
 import org.example.culturetest.tests.domain.TestService;
 import org.example.culturetest.users.api.dto.admin.response.AdminOpenUserProfile;
@@ -33,14 +34,14 @@ public class AdminController {
     }
 
     @Operation(summary = "Назначить пользователя админом")
-    @PostMapping("/{email}")
+    @PostMapping("/{email}/role")
     public ResponseEntity<String> setRole(@PathVariable String email) {
         return ResponseEntity.ok(adminService.setRole(email));
     }
 
     @Operation(summary = "Написать комментарий пользователю")
-    @PostMapping("/{userId}")
-    public ResponseEntity<String> setRole(
+    @PostMapping("/{userId}/comment")
+    public ResponseEntity<String> setComment(
             @PathVariable Long userId,
             @RequestParam String comment
     ){
@@ -49,7 +50,7 @@ public class AdminController {
 
     @Operation(summary = "Создание теста")
     @PostMapping("/test")
-    public ResponseEntity<String> create(@RequestBody CreateTestRequest request) {
+    public ResponseEntity<Test> create(@RequestBody CreateTestRequest request) {
         return ResponseEntity.ok(testService.create(request));
     }
 

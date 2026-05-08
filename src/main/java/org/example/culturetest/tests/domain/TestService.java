@@ -57,15 +57,15 @@ public class TestService {//TODO ДОБАВИТЬ DTO
     }
 
     @Transactional
-    public String create(CreateTestRequest request) {
+    public Test create(CreateTestRequest request) {
         try {
-            testRepository.save(TestEntity.builder()
+            TestEntity test = testRepository.save(TestEntity.builder()
                     .name(request.name())
                     .description(request.description())
                     .isActive(true)
                     .build());
 
-            return "Успешно";
+            return testMapper.convertEntityToDTO(test);
         } catch (Exception e) {
             log.error("Не удалось создать тест, ex={}", e.getMessage());
             throw new RuntimeException(e);

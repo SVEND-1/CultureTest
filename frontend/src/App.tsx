@@ -9,6 +9,7 @@ import ForgotPassword from "./pages/auth/forgot-password/ForgotPassword.tsx";
 import ResetPassword from "./pages/auth/reset-password/ResetPassword.tsx";
 import MainPage from "./pages/main/MainPage.tsx";
 import ProfilePage from "./pages/profile/ProfilePage.tsx";
+import AdminProfile from "./pages/adminProfile/AdminProfile.tsx";
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
                 <Route path="/main" element={<MainPage/>}/>
 
                 <Route path="/profile" element={<ProfilePage/>}/>
+
+                <Route path="/admin-profile" element={<AdminProfile/>}/>
             </Routes>
         </BrowserRouter>
   )
