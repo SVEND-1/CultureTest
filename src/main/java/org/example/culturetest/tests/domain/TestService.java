@@ -39,6 +39,7 @@ public class TestService {//TODO ДОБАВИТЬ DTO
         TestResponse response = testMapper.convertDTOToResponse(entity);
 
         return new TestResponse(
+                entity.getId(),
                 response.name(),
                 response.description(),
                 isDone,

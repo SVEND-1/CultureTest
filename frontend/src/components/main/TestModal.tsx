@@ -1,11 +1,13 @@
-import type {Test} from '../../types/main/main.types';
+import type { Test } from '../../types/main/main.types';
 
 interface TestModalProps {
     test: Test;
+    loading: boolean;
     onClose: () => void;
+    onStart: (testId: number) => void;
 }
 
-export function TestModal({ test, onClose }: TestModalProps) {
+export function TestModal({ test, loading, onClose, onStart }: TestModalProps) {
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-card" onClick={(e) => e.stopPropagation()}>
@@ -25,7 +27,9 @@ export function TestModal({ test, onClose }: TestModalProps) {
                         <span className="modal-meta__icon">📋</span>
                         <div>
                             <span className="modal-meta__label">Вопросов</span>
-                            <span className="modal-meta__value">{test.questions}</span>
+                            <span className="modal-meta__value">
+                                {loading ? '...' : test.questions}
+                            </span>
                         </div>
                     </div>
                     <div className="modal-meta__item">
@@ -36,12 +40,12 @@ export function TestModal({ test, onClose }: TestModalProps) {
                         </div>
                     </div>
                     <div className="modal-meta__item">
-                        <span className="modal-meta__icon">{test.completed ? "✅" : "🔘"}</span>
+                        <span className="modal-meta__icon">{test.completed ? '✅' : '🔘'}</span>
                         <div>
                             <span className="modal-meta__label">Статус</span>
                             <span className="modal-meta__value">
-                {test.completed ? "Пройден" : "Не пройден"}
-              </span>
+                                {test.completed ? 'Пройден' : 'Не пройден'}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -53,8 +57,12 @@ export function TestModal({ test, onClose }: TestModalProps) {
                 )}
 
                 <div className="modal-actions">
-                    <button className="btn-primary btn-primary--full">
-                        {test.completed ? "Пройти повторно" : "Начать тест"}
+                    <button
+                        className="btn-primary btn-primary--full"
+                        onClick={() => onStart(test.id)}
+                        disabled={loading}
+                    >
+                        {test.completed ? 'Пройти повторно' : 'Начать тест'}
                     </button>
                     <button className="btn-ghost btn-ghost--full" onClick={onClose}>
                         Закрыть

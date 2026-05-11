@@ -10,6 +10,9 @@ import ResetPassword from "./pages/auth/reset-password/ResetPassword.tsx";
 import MainPage from "./pages/main/MainPage.tsx";
 import ProfilePage from "./pages/profile/ProfilePage.tsx";
 import AdminProfile from "./pages/adminProfile/AdminProfile.tsx";
+import CreateTestPage from "./pages/createTest/CreateTestPage.tsx";
+import TestPage from "./pages/test/TestPage.tsx";
+
 
 function App() {
 
@@ -29,6 +32,10 @@ function App() {
                 <Route path="/profile" element={<ProfilePage/>}/>
 
                 <Route path="/admin-profile" element={<AdminProfile/>}/>
+
+                <Route path="/create-test" element={<CreateTestPage/>}/>
+
+                <Route path="/test/:id" element={<TestPage/>}/>
             </Routes>
         </BrowserRouter>
   )
