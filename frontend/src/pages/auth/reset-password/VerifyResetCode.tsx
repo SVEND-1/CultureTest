@@ -17,7 +17,7 @@ export default function VerifyResetCode() {
     useEffect(() => {
         if (!resetId) {
             alert("Некорректная ссылка восстановления");
-            navigate("/");
+            navigate("/login");
         }
     }, [resetId, navigate]);
 

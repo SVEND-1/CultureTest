@@ -1,11 +1,11 @@
-// ============================================================
 // useMain.ts — стейт и логика главной страницы
 // ============================================================
 
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Test } from '../../types/main/main.types';
-import { fetchMainTests, fetchTestDetail } from '../../api/mainApi';
+import { fetchMainTests } from '../../api/mainApi';
+import { getUserRole } from '../auth/auth';
 
 export function useMain() {
     const navigate = useNavigate();
@@ -13,11 +13,8 @@ export function useMain() {
     const [tests, setTests] = useState<Test[]>([]);
     const [testsLoading, setTestsLoading] = useState(true);
     const [testsError, setTestsError] = useState<string | null>(null);
-
     const [activeTest, setActiveTest] = useState<Test | null>(null);
-    const [modalLoading, setModalLoading] = useState(false);
 
-    // Загружаем 3 теста при маунте
     useEffect(() => {
         const load = async () => {
             try {
@@ -34,27 +31,26 @@ export function useMain() {
         load();
     }, []);
 
-    // Открываем модалку — догружаем детали (количество вопросов)
-    const openTest = useCallback(async (test: Test) => {
+    const openTest = useCallback((test: Test) => {
         setActiveTest(test);
-        try {
-            setModalLoading(true);
-            const detail = await fetchTestDetail(test.id);
-            setActiveTest(detail);
-        } catch {
-            // если детали не загрузились — оставляем то что есть
-        } finally {
-            setModalLoading(false);
-        }
     }, []);
 
     const closeTest = useCallback(() => {
         setActiveTest(null);
     }, []);
 
-    // Кнопка «Начать тест» в модалке
     const startTest = useCallback((testId: number) => {
         navigate(`/test/${testId}`);
+    }, [navigate]);
+
+    // Навигация на профиль в зависимости от роли
+    const goToProfile = useCallback(() => {
+        const role = getUserRole();
+        if (role === 'ADMIN') {
+            navigate('/admin-profile');
+        } else {
+            navigate('/profile');
+        }
     }, [navigate]);
 
     return {
@@ -62,9 +58,9 @@ export function useMain() {
         testsLoading,
         testsError,
         activeTest,
-        modalLoading,
         openTest,
         closeTest,
         startTest,
+        goToProfile, // ← добавили
     };
 }

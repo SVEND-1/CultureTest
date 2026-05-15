@@ -28,7 +28,7 @@ export default function Login() {
                     localStorage.setItem("user", JSON.stringify(data.user));
                 }
 
-                navigate("/main");
+                navigate("/");
             } else {
                 alert(data.message || "Неверные данные");
             }

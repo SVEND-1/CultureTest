@@ -19,7 +19,7 @@ export default function ResetPassword() {
     useEffect(() => {
         if (!resetId) {
             alert("Некорректная ссылка восстановления");
-            navigate("/");
+            navigate("/login");
         }
     }, [resetId, navigate]);
 
@@ -37,7 +37,7 @@ export default function ResetPassword() {
 
             if (response.data.success) {
                 alert("Пароль успешно изменён");
-                navigate("/");
+                navigate("/login");
             } else {
                 alert(response.data.message || "Ошибка сброса");
             }

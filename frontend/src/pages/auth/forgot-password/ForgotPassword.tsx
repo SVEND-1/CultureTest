@@ -18,7 +18,7 @@ export default function ForgotPassword() {
             const response = await forgotPassword(email);
 
             if (response.data.success) {
-                navigate(`/reset-verify?resetId=${response.data.resetId}`);
+                navigate(`/verify-reset?resetId=${response.data.resetId}`);
             } else {
                 alert(response.data.message || "Ошибка отправки кода");
             }

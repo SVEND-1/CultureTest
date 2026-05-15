@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { NAV_LINKS } from '../../api/main.mockData.ts';
 
-export function Header() {
+interface HeaderProps {
+    onProfileClick: () => void;
+}
+
+export function Header({ onProfileClick }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
@@ -20,11 +24,7 @@ export function Header() {
                     ))}
                 </nav>
 
-                <div className="header-profile">
-                    <a href="/profile" className="profile-btn">
-                        Профиль
-                    </a>
-                </div>
+                <button onClick={onProfileClick} className="profile-btn">Профиль</button>
 
                 <button
                     className="burger-btn"

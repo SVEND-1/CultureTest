@@ -12,19 +12,19 @@ public class EmailTemplateService {
 
     public String getSubject(NotifyType type, Map<String, String> params) {
         if (type == null || params == null) {
-            return "Уведомление от Tula Hackaton";
+            return "Уведомление от CultureTest";
         }
 
         return switch (type) {
             case REGISTER -> String.format("CultureTest: Ваш код для входа [%s]",
                     params.getOrDefault("code", ""));
-            case PASSWORD_RESET -> String.format("Tula Hackaton: Сброс пароля [%s]",
+            case PASSWORD_RESET -> String.format("CultureTest: Сброс пароля [%s]",
                     params.getOrDefault("code", ""));
-            case REPLAY_CODE -> String.format("Hackaton: Повторный код [%s]",
+            case REPLAY_CODE -> String.format("CultureTest: Повторный код [%s]",
                     params.getOrDefault("code", ""));
-            case LOGIN -> "Tula Hackaton: Вход в аккаунт";
+            case LOGIN -> "CultureTest: Вход в аккаунт";
 
-            default -> "Уведомление от Tula Hackaton";
+            default -> "Уведомление от CultureTest";
         };
     }
 
@@ -35,7 +35,7 @@ public class EmailTemplateService {
 
         return switch (type) {
             case REGISTER -> String.format("""
-                Добро пожаловать в Tula Hackaton!
+                Добро пожаловать в CultureTest!
                 
                 Ваш код для входа: %s
                 
@@ -44,7 +44,7 @@ public class EmailTemplateService {
                 Если вы не запрашивали вход, пожалуйста, проигнорируйте это письмо.
                 
                 С уважением,
-                Команда Tula Hackaton
+                Команда CultureTest
                 """, params.getOrDefault("code", ""));
 
             case PASSWORD_RESET -> String.format("""
@@ -57,7 +57,7 @@ public class EmailTemplateService {
                 Если вы не запрашивали сброс пароля, проигнорируйте это письмо.
                 
                 С уважением,
-                Команда Tula Hackaton
+                Команда CultureTest
                 """, params.getOrDefault("code", ""));
 
             case REPLAY_CODE -> String.format("""
@@ -66,7 +66,7 @@ public class EmailTemplateService {
                 Ваш повторный код: %s
                 
                 С уважением,
-                Команда Tula Hackaton
+                Команда CultureTest
                 """, params.getOrDefault("code", ""));
 
             case LOGIN -> String.format("""
@@ -77,7 +77,7 @@ public class EmailTemplateService {
                 Если это были не вы, пожалуйста, свяжитесь со службой поддержки.
                 
                 С уважением,
-                Команда Tula Hackaton
+                Команда CultureTest
                 """, params.getOrDefault("userName", ""));
 
         };

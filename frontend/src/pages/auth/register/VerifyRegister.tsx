@@ -13,7 +13,7 @@ export default function VerifyRegister() {
     useEffect(() => {
         if (!registrationId) {
             alert("Некорректная ссылка подтверждения");
-            navigate("/");
+            navigate("/login");
         }
     }, [registrationId, navigate]);
 
@@ -30,7 +30,7 @@ export default function VerifyRegister() {
 
             if (response.data.success) {
                 alert("Регистрация подтверждена");
-                navigate("/main");
+                navigate("/");
             } else {
                 alert(response.data.message || "Ошибка подтверждения");
             }

@@ -18,15 +18,16 @@ export default function MainPage() {
         testsLoading,
         testsError,
         activeTest,
-        modalLoading,
+        //modalLoading,
         openTest,
         closeTest,
         startTest,
+        goToProfile,
     } = useMain();
 
     return (
         <div className="app">
-            <Header />
+            <Header onProfileClick={goToProfile} />
             <main>
                 <HeroSection />
                 <InstructionSection />
@@ -35,7 +36,7 @@ export default function MainPage() {
                     loading={testsLoading}
                     error={testsError}
                     activeTest={activeTest}
-                    modalLoading={modalLoading}
+                    modalLoading={false} //
                     onOpenTest={openTest}
                     onCloseTest={closeTest}
                     onStartTest={startTest}

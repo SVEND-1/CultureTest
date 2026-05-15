@@ -25,7 +25,7 @@ export default function Register() {
             const response = await sendRegisterCode(form);
             if (response.data.success) {
                 const registrationId = response.data.registrationId;
-                navigate(`/verify?registrationId=${registrationId}`);
+                navigate(`/verify-register?registrationId=${registrationId}`);
             } else {
                 alert(response.data.message || "Ошибка регистрации");
             }

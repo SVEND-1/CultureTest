@@ -1,44 +1,65 @@
+// ============================================================
+// App.tsx — исправленный
+// ============================================================
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import './App.css'
-import Login from "./pages/auth/login/Login.tsx";
-import Register from "./pages/auth/register/Register.tsx";
-import VerifyRegister from "./pages/auth/register/VerifyRegister.tsx";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+
+import LoginPage           from './pages/auth/login/Login.tsx';
+import RegisterPage        from './pages/auth/register/Register';
+import VerifyRegister from "./pages/auth/register/VerifyRegister";
 import VerifyResetCode from "./pages/auth/reset-password/VerifyResetCode.tsx";
-import ForgotPassword from "./pages/auth/forgot-password/ForgotPassword.tsx";
-import ResetPassword from "./pages/auth/reset-password/ResetPassword.tsx";
-import MainPage from "./pages/main/MainPage.tsx";
-import ProfilePage from "./pages/profile/ProfilePage.tsx";
-import AdminProfile from "./pages/adminProfile/AdminProfile.tsx";
-import CreateTestPage from "./pages/createTest/CreateTestPage.tsx";
-import TestPage from "./pages/test/TestPage.tsx";
+import ForgotPasswordPage  from './pages/auth/forgot-password/ForgotPassword';
+import ResetPasswordPage   from './pages/auth/reset-password/ResetPassword';
+
+import MainPage            from './pages/main/MainPage.tsx';
+import ProfilePage         from './pages/profile/ProfilePage';
+
+import AdminProfile        from './pages/adminProfile/AdminProfile';
+import AdminOpenProfile    from './pages/adminOpenProfile/AdminOpenProfile';
+
+import TestPage            from './pages/test/TestPage';
+import CreateTestPage      from './pages/createTest/CreateTestPage';
 
 
-function App() {
 
 
-  return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/verify" element={<VerifyRegister />} />
-                <Route path="/reset-verify" element={<VerifyResetCode />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
+const ProtectedLayout = () => {
+    const token = localStorage.getItem('token');
+    return token ? <Outlet /> : <Navigate to="/login" replace />;
+};
 
-                <Route path="/main" element={<MainPage/>}/>
+const PublicLayout = () => {
+    const token = localStorage.getItem('token');
+    return token ? <Navigate to="/" replace /> : <Outlet />;
+};
 
-                <Route path="/profile" element={<ProfilePage/>}/>
 
-                <Route path="/admin-profile" element={<AdminProfile/>}/>
+const App = () => (
+    <BrowserRouter>
+        <Routes>
+            {/* Публичные роуты */}
+            <Route element={<PublicLayout />}>
+                <Route path="/login"            element={<LoginPage />} />
+                <Route path="/register"         element={<RegisterPage />} />
+                <Route path="/verify-register"  element={<VerifyRegister />} />
+                <Route path="/verify-reset"     element={<VerifyResetCode />}/>
+                <Route path="/forgot-password"  element={<ForgotPasswordPage />} />
+                <Route path="/reset-password"   element={<ResetPasswordPage />} />
+            </Route>
 
-                <Route path="/create-test" element={<CreateTestPage/>}/>
+            {/* Защищённые роуты */}
+            <Route element={<ProtectedLayout />}>
+                <Route path="/"                         element={<MainPage />} />
+                <Route path="/profile"                  element={<ProfilePage />} />
+                <Route path="/admin-profile"            element={<AdminProfile />} />
+                <Route path="/admin-open-profile/:userId" element={<AdminOpenProfile />} />
+                <Route path="/test/:id"                 element={<TestPage />} />
+                <Route path="/create-test"              element={<CreateTestPage />} />
+            </Route>
 
-                <Route path="/test/:id" element={<TestPage/>}/>
-            </Routes>
-        </BrowserRouter>
-  )
-}
+            <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+    </BrowserRouter>
+);
 
-export default App
+export default App;

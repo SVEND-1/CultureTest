@@ -1,15 +1,16 @@
 // ── Попытка теста (приходит внутри UserProfileResponse) ──────────
 export interface TestAttemptProfile {
-  testId: number;
-  testTitle: string;
-  completedAt: string; // ISO-дата
-  score: number;
+    id: number;
+    testName: string;
+    completedAt: string;
+    totalScore: number;
 }
 
 // ── Главный ответ GET /api/users ──────────────────────────────────
 export interface UserProfileResponse {
   name: string;
   email: string;
+  role: 'USER' | 'ADMIN';
   attempts: TestAttemptProfile[];
   totalScore: number | null;
   totalScoreThinking: number | null;

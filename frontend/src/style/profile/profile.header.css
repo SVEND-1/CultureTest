@@ -1,54 +1,123 @@
 /* ============================================================
-   profile.header.css — Аватар, имя, email
+   profile.header.css
    ============================================================ */
 
 .profile-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.profile-header__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .profile-header__avatar {
-  flex-shrink: 0;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary-mid) 0%, var(--color-primary-light) 100%);
-  border: 2px solid rgba(59, 130, 246, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  color: #fff;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary-mid) 0%, var(--color-primary-light) 100%);
+    border: 2px solid rgba(59, 130, 246, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
 }
 
 .profile-header__info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .profile-header__name {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--color-text-white);
-  letter-spacing: -0.3px;
-  line-height: 1.2;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text-white);
+    letter-spacing: -0.3px;
+    line-height: 1.2;
 }
 
 .profile-header__email {
-  font-size: 13.5px;
-  color: var(--color-text-muted);
-  font-weight: 300;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    font-weight: 300;
+}
+
+/* ── Бейдж роли ── */
+.profile-header__badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ── Правая группа: бейдж + кнопка ── */
+.profile-header__right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* ── Кнопка «На главную» ── */
+.profile-header__back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(30, 77, 183, 0.08);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-btn);
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.profile-header__back:hover {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: var(--color-text-white);
+    transform: translateX(-1px);
 }
 
 @media (max-width: 480px) {
-  .profile-header { gap: 14px; }
-  .profile-header__avatar { width: 54px; height: 54px; font-size: 18px; }
-  .profile-header__name { font-size: 19px; }
+    .profile-header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .profile-header__right {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .profile-header__avatar {
+        width: 46px;
+        height: 46px;
+        font-size: 15px;
+    }
+
+    .profile-header__name { font-size: 17px; }
 }

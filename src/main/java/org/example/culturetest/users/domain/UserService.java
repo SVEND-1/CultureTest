@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.culturetest.answerOptions.db.AnswerOptionEntity;
+import org.example.culturetest.answerUsers.db.AnswerUserEntity;
 import org.example.culturetest.config.JwtTokenProvider;
 import org.example.culturetest.questions.db.QuestionEntity;
 import org.example.culturetest.questions.db.QuestionType;
@@ -106,18 +107,22 @@ public class UserService {
     private double calcAvgByType(List<TestAttemptEntity> attempts, QuestionType type) {
         return attempts.stream()
                 .mapToDouble(attempt -> {
-                    List<QuestionEntity> questions = attempt.getTest().getQuestions()
-                            .stream()
-                            .filter(q -> q.getType() == type)
-                            .toList();
+                    List<QuestionEntity> questions = attempt.getTest().getQuestions();
+                    List<AnswerUserEntity> answers = attempt.getUserAnswers();
 
-                    if (questions.isEmpty()) return 0;
-                    long correct = questions.stream()
-                            .filter(q -> q.getAnswerOptions().stream()
-                                    .anyMatch(AnswerOptionEntity::getIsCorrect))
+                    long totalForType = questions.stream()
+                            .filter(q -> q.getType() == type)
                             .count();
 
-                    return (double) correct / questions.size() * 100;
+                    if (totalForType == 0) return 0;
+
+                    long correctCount = answers.stream()
+                            .filter(a -> a.getQuestion().getType() == type)
+                            .filter(AnswerUserEntity::getIsCorrect)
+                            .count();
+
+                    double raw = (double) correctCount / totalForType * 100;
+                    return Math.round(raw * 100.0) / 100.0;
                 })
                 .average()
                 .orElse(0);

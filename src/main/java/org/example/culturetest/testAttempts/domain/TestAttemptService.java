@@ -64,8 +64,8 @@ public class TestAttemptService {
     public TestAttemptEntity save(TestAttemptEntity testAttempt) {
         try {
             return testAttemptRepository.save(testAttempt);
-        }catch (Exception e) {
-            log.error("Не удалось сохранить попытку теста,ex={}",e.getMessage());
+        } catch (Exception e) {
+            log.error("Не удалось сохранить попытку теста, ex={}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -101,11 +101,12 @@ public class TestAttemptService {
             List<AnswerUserEntity> allAnswer = attempt.getUserAnswers();
             List<QuestionEntity> allQuestion = attempt.getTest().getQuestions();
 
+            // Считаем правильные ответы пользователя
             long correctCount = allAnswer.stream()
                     .filter(AnswerUserEntity::getIsCorrect)
                     .count();
 
-            int totalQuestions = attempt.getTest().getQuestions().size();
+            int totalQuestions = allQuestion.size();
             double score = totalQuestions > 0
                     ? (double) correctCount / totalQuestions * 100
                     : 0;
@@ -114,33 +115,48 @@ public class TestAttemptService {
             attempt.setCompletedAt(LocalDateTime.now());
 
             testAttemptRepository.save(attempt);
-            return mapperFinish(allQuestion,score);
+            return mapperFinish(allQuestion, allAnswer, score);
         } catch (Exception e) {
             log.error("Не удалось завершить тест, ex={}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    private TestAttemptFinish mapperFinish(List<QuestionEntity> allQuestion, double totalScore) {
-        Map<QuestionType, List<QuestionEntity>> questionsByType = allQuestion.stream()
-                .collect(Collectors.groupingBy(QuestionEntity::getType));
+    private TestAttemptFinish mapperFinish(
+            List<QuestionEntity> allQuestion,
+            List<AnswerUserEntity> allAnswer,
+            double totalScore) {
+
+        Map<QuestionType, List<AnswerUserEntity>> answersByType = allAnswer.stream()
+                .collect(Collectors.groupingBy(a -> a.getQuestion().getType()));
 
         return new TestAttemptFinish(
                 totalScore,
-                calculateScoreForType(questionsByType, QuestionType.THINKING),
-                calculateScoreForType(questionsByType, QuestionType.AFFILIATION),
-                calculateScoreForType(questionsByType, QuestionType.FLEXIBILITY),
-                calculateScoreForType(questionsByType, QuestionType.EXPERIENCE)
+                calculateScoreForType(answersByType, allQuestion, QuestionType.THINKING),
+                calculateScoreForType(answersByType, allQuestion, QuestionType.AFFILIATION),
+                calculateScoreForType(answersByType, allQuestion, QuestionType.FLEXIBILITY),
+                calculateScoreForType(answersByType, allQuestion, QuestionType.EXPERIENCE)
         );
     }
 
-    private double calculateScoreForType(Map<QuestionType, List<QuestionEntity>> questionsByType, QuestionType type) {
-        List<QuestionEntity> questions = questionsByType.getOrDefault(type, List.of());
-        long correctCount = questions.stream()
-                .filter(q -> q.getAnswerOptions().stream().anyMatch(AnswerOptionEntity::getIsCorrect))
+    private double calculateScoreForType(
+            Map<QuestionType, List<AnswerUserEntity>> answersByType,
+            List<QuestionEntity> allQuestion,
+            QuestionType type) {
+
+        long totalForType = allQuestion.stream()
+                .filter(q -> q.getType() == type)
                 .count();
-        if (questions.isEmpty()) return 0;
-        double raw = (double) correctCount / questions.size() * 100;
+
+        if (totalForType == 0) return 0;
+
+        long correctCount = answersByType
+                .getOrDefault(type, List.of())
+                .stream()
+                .filter(AnswerUserEntity::getIsCorrect)
+                .count();
+
+        double raw = (double) correctCount / totalForType * 100;
         return Math.round(raw * 100.0) / 100.0;
     }
 
