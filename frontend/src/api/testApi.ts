@@ -10,7 +10,7 @@ import type {
     SubmitAnswerRequest,
 } from '../types/test/test.types';
 
-const API_BASE_URL = 'http://7960010-ee569251.twc1.net:8080';
+const API_BASE_URL = 'http://62.113.37.103:8080';
 
 /* ── Тесты ── */
 const testsApi = axios.create({

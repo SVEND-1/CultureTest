@@ -5,7 +5,7 @@
 import axios from 'axios';
 import type { AdminProfileResponse, UserAI } from '../types/adminProfile/adminProfile.types';
 
-const API_BASE_URL = 'http://7960010-ee569251.twc1.net:8080';
+const API_BASE_URL = 'http://62.113.37.103:8080';
 
 const API = axios.create({
     baseURL: `${API_BASE_URL}/api/admin`,
