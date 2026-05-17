@@ -21,17 +21,10 @@ import org.example.culturetest.users.db.UserEntity;
 import org.example.culturetest.users.db.UserRepository;
 import org.example.culturetest.users.domain.mapper.UserMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -46,68 +39,11 @@ public class UserService {
     private final TestAttemptMapper testAttemptMapper;
 
     public UserEntity getCurrentUser() {
-        UserEntity user = null;
-
-        // 1. Пытаемся получить из SecurityContext
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserEntity) {
-                return (UserEntity) principal;
-            }
-            if (principal instanceof String) {
-                String email = (String) principal;
-                user = userRepository.findByEmailEqualsIgnoreCase(email);
-                if (user != null) return user;
-            }
-        }
-
-        // 2. Пытаемся получить из токена в cookie
         String token = jwtTokenProvider.getCurrentToken();
-        if (token != null && jwtTokenProvider.isValidToken(token)) {
-            String email = jwtTokenProvider.getEmailFromToken(token);
-            if (email != null) {
-                user = userRepository.findByEmailEqualsIgnoreCase(email);
-                if (user != null) {
-                    // Обновляем SecurityContext
-                    updateSecurityContext(user);
-                    return user;
-                }
-            }
-        }
-
-        // 3. Пытаемся получить из Authorization header
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes != null) {
-            String authHeader = attributes.getRequest().getHeader("Authorization");
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                token = authHeader.substring(7);
-                if (jwtTokenProvider.isValidToken(token)) {
-                    String email = jwtTokenProvider.getEmailFromToken(token);
-                    if (email != null) {
-                        user = userRepository.findByEmailEqualsIgnoreCase(email);
-                        if (user != null) {
-                            updateSecurityContext(user);
-                            return user;
-                        }
-                    }
-                }
-            }
-        }
-
+        String email = jwtTokenProvider.getEmailFromToken(token);
+        UserEntity user = userRepository.findByEmailEqualsIgnoreCase(email);
         notFoundUser(user);
         return user;
-    }
-
-    private void updateSecurityContext(UserEntity user) {
-        List<SimpleGrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
-        );
-
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(user, null, authorities);
-
-        SecurityContextHolder.getContext().setAuthentication(authToken);
     }
 
     public List<UserDefaultResponse> findAll(){
