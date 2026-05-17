@@ -1,0 +1,83 @@
+/* ============================================================
+   test.intro.css — экран-интро перед началом теста
+   ============================================================ */
+
+.test-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+}
+
+/* Иконка */
+.test-intro__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--color-primary-mid), var(--color-primary-light));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 28px rgba(30, 77, 183, 0.4);
+}
+
+/* Заголовок */
+.test-intro__title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #e8f0ff 0%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Описание */
+.test-intro__desc {
+    font-size: 14.5px;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 420px;
+    margin-bottom: 28px;
+}
+
+/* Мета (количество вопросов, время) */
+.test-intro__meta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 36px;
+    padding: 16px 24px;
+    background: rgba(10, 25, 60, 0.5);
+    border: 1px solid var(--color-border-subtle, rgba(59, 130, 246, 0.14));
+    border-radius: 12px;
+    width: 100%;
+}
+
+.test-intro__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.test-intro__meta-item svg {
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .test-intro__meta { gap: 14px; padding: 14px 16px; }
+}

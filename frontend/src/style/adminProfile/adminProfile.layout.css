@@ -1,0 +1,94 @@
+/* ============================================================
+   adminProfile.layout.css — обёртка страницы
+   Наследует переменные из auth.variables.css
+   ============================================================ */
+
+/* Переопределяем --color-border-subtle если он не задан */
+:root {
+    --color-border-subtle: rgba(59, 130, 246, 0.14);
+}
+
+.profile-page {
+    min-height: 100vh;
+    background-color: var(--color-bg-deep);
+    padding: 40px 24px 80px;
+}
+
+.profile-page__inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: cardAppear 0.45s var(--ease-out) both;
+}
+
+@keyframes cardAppear {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Загрузка / ошибка ── */
+.profile-loading,
+.profile-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    text-align: center;
+}
+
+.profile-loading__spinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.profile-loading__text {
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+.profile-error__icon   { font-size: 36px; }
+.profile-error__message {
+    font-size: 15px;
+    color: #f87171;
+}
+.profile-error__retry {
+    padding: 10px 24px;
+    background: rgba(30, 77, 183, 0.08);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-btn);
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.profile-error__retry:hover {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: var(--color-text-white);
+}
+
+/* ── Карточка-секция (переиспользуется из profile) ── */
+.profile-card {
+    background: var(--color-bg-card);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 32px;
+}
+
+@media (max-width: 600px) {
+    .profile-page  { padding: 20px 16px 60px; }
+    .profile-card  { padding: 22px 18px; }
+}

@@ -1,0 +1,111 @@
+/* ============================================================
+   adminProfile.ai.css — блок и модалка подбора сотрудников
+   ============================================================ */
+
+/* ── Заголовок блока ── */
+.ai-block__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.ai-block__subtitle {
+    font-size: 13px;
+    color: var(--color-text-faint);
+    font-weight: 300;
+    margin-top: 4px;
+}
+
+.ai-block__btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* ── Кандидат в списке ── */
+.ai-candidate-item {
+    transition: border-color var(--transition), background var(--transition),
+                transform var(--transition);
+}
+
+.ai-candidate-item:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+    background: rgba(15, 35, 80, 0.6);
+    transform: translateX(3px);
+}
+
+.ai-candidate-item__rank {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-accent) !important;
+    background: rgba(59, 130, 246, 0.12) !important;
+    border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* ── Модалка ── */
+.ai-modal {
+    max-width: 540px;
+}
+
+.ai-modal__search-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.ai-modal__input {
+    flex: 1;
+    padding: 11px 16px;
+    background: rgba(10, 25, 60, 0.55);
+    border: 1px solid var(--color-border-subtle, rgba(59, 130, 246, 0.14));
+    border-radius: var(--radius-input, 12px);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.ai-modal__input::placeholder {
+    color: var(--color-placeholder, rgba(140, 170, 230, 0.45));
+}
+
+.ai-modal__input:focus {
+    border-color: var(--color-border-focus, rgba(59, 130, 246, 0.75));
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.ai-modal__input:disabled {
+    opacity: 0.5;
+}
+
+.ai-modal__loading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 0 8px;
+}
+
+.ai-modal__results {
+    margin-top: 20px;
+}
+
+.ai-modal__results-label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+}
+
+@media (max-width: 560px) {
+    .ai-block__header   { flex-direction: column; }
+    .ai-block__btn      { width: 100%; justify-content: center; }
+    .ai-modal__search-row { flex-direction: column; }
+    .admin-add-btn      { width: 100%; justify-content: center; }
+}

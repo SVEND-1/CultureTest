@@ -1,0 +1,10 @@
+/* ============================================================
+   adminProfile.index.css
+   Подключай только этот файл:
+     import '../../style/adminProfile/adminProfile.index.css';
+   ============================================================ */
+
+@import './adminProfile.layout.css';
+@import './adminProfile.info.css';
+@import './adminProfile.actions.css';
+@import './adminProfile.ai.css';

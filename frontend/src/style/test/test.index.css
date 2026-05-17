@@ -1,0 +1,10 @@
+/* ============================================================
+   test.index.css — точка входа стилей страницы /test/:id
+   Подключай только этот файл:
+     import '../../styles/test/test.index.css';
+   ============================================================ */
+
+@import './test.layout.css';
+@import './test.intro.css';
+@import './test.question.css';
+@import './test.results.css';

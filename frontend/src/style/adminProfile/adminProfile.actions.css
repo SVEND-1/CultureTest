@@ -1,0 +1,162 @@
+/* ============================================================
+   adminProfile.actions.css — кнопки навигации + добавление админа
+   ============================================================ */
+
+.admin-actions__title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text-white);
+    letter-spacing: -0.2px;
+    margin-bottom: 20px;
+}
+
+/* ── Навигационные кнопки ── */
+.admin-nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.admin-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition),
+    background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+/* Создать тест — акцентная */
+.admin-nav-btn--primary {
+    background: linear-gradient(135deg, var(--color-primary-mid), var(--color-primary-light));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(30, 77, 183, 0.35);
+}
+.admin-nav-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5);
+}
+
+/* Остальные — ghost */
+.admin-nav-btn--ghost {
+    background: rgba(59, 130, 246, 0.07);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+}
+.admin-nav-btn--ghost:hover {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: var(--color-border-strong);
+    color: var(--color-text-white);
+    transform: translateY(-2px);
+}
+.admin-nav-btn--ghost:active,
+.admin-nav-btn--primary:active {
+    transform: none;
+}
+
+/* ── Разделитель ── */
+.admin-divider {
+    height: 1px;
+    background: var(--color-border-subtle);
+    margin: 22px 0;
+}
+
+/* ── Секция добавления admin ── */
+.admin-add-section__label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 10px;
+}
+
+.admin-add-section__row {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-email-input {
+    flex: 1;
+    padding: 11px 16px;
+    background: rgba(10, 25, 60, 0.55);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-input);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.admin-email-input::placeholder { color: var(--color-placeholder, rgba(140, 170, 230, 0.45)); }
+.admin-email-input:focus {
+    border-color: var(--color-border-focus, rgba(59, 130, 246, 0.75));
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+.admin-email-input:disabled { opacity: 0.5; }
+
+/* Кнопка «Назначить» */
+.admin-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 20px;
+    background: linear-gradient(135deg, var(--color-primary-mid), var(--color-primary-light));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    border-radius: var(--radius-btn);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+    flex-shrink: 0;
+}
+.admin-add-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+}
+.admin-add-btn:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+/* Спиннер внутри кнопки */
+.admin-add-btn__spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+/* Фидбэк под строкой */
+.admin-add-section__error {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: #f87171;
+}
+.admin-add-section__success {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: #4ade80;
+}
+
+@media (max-width: 560px) {
+    .admin-nav-buttons { flex-direction: column; }
+    .admin-nav-btn     { width: 100%; justify-content: center; }
+    .admin-add-section__row { flex-direction: column; }
+    .admin-add-btn     { width: 100%; justify-content: center; }
+}

@@ -1,0 +1,105 @@
+/* ============================================================
+   test.layout.css — обёртка страницы теста
+   ============================================================ */
+
+/* ── Фон (аналог auth-container) ── */
+.test-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--color-bg-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+}
+
+.test-page__bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(30, 77, 183, 0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(15, 45, 120, 0.1) 0%, transparent 55%),
+        var(--color-bg-deep);
+}
+
+.test-page__bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+}
+
+/* ── Центрирующий враппер ── */
+.test-page__wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ── Загрузка / ошибка ── */
+.test-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    padding: 48px 0;
+}
+
+/* ── Карточка (основной контейнер) ── */
+.test-card {
+    width: 100%;
+    background: var(--color-bg-card);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 36px;
+    animation: cardAppear 0.45s var(--ease-out) both;
+}
+
+.test-card--wide {
+    max-width: 700px;
+}
+
+/* Хедер внутри карточки (название теста + кнопка назад) */
+.test-card__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.test-card__test-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@keyframes cardAppear {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+    .test-page     { padding: 20px 16px; align-items: flex-start; }
+    .test-card     { padding: 24px 18px; border-radius: 16px; }
+}

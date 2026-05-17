@@ -1,0 +1,175 @@
+/* ============================================================
+   test.question.css — прогресс-бар и карточка вопроса
+   ============================================================ */
+
+/* ── Прогресс-бар ── */
+.test-progress {
+    margin-bottom: 28px;
+}
+
+.test-progress__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.test-progress__label {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-white);
+}
+
+.test-progress__answered {
+    font-size: 12px;
+    color: var(--color-text-faint);
+}
+
+.test-progress__bar-wrap {
+    height: 4px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.test-progress__bar {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--color-primary-mid), var(--color-accent));
+    transition: width 0.5s var(--ease-out);
+}
+
+/* ── Вопрос ── */
+.test-question {
+    animation: fadeSlideIn 0.35s var(--ease-out) both;
+}
+
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.test-question__text {
+    font-family: var(--font-display);
+    font-size: clamp(16px, 2.5vw, 19px);
+    font-weight: 600;
+    color: var(--color-text-white);
+    line-height: 1.45;
+    letter-spacing: -0.2px;
+    margin-bottom: 24px;
+}
+
+/* ── Варианты ответа ── */
+.test-question__options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.test-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: rgba(10, 25, 60, 0.5);
+    border: 1px solid var(--color-border-subtle, rgba(59, 130, 246, 0.14));
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.test-option:not(:disabled):hover {
+    background: rgba(15, 35, 80, 0.6);
+    border-color: rgba(59, 130, 246, 0.35);
+    transform: translateX(4px);
+}
+
+.test-option:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Выбранный вариант */
+.test-option--selected {
+    background: rgba(30, 77, 183, 0.2) !important;
+    border-color: var(--color-primary-light) !important;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    transform: none !important;
+}
+
+/* Буква (A, B, C...) */
+.test-option__letter {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.test-option--selected .test-option__letter {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary-light);
+    color: #fff;
+}
+
+/* Текст варианта */
+.test-option__text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    transition: color var(--transition);
+}
+
+.test-option--selected .test-option__text {
+    color: var(--color-text-white);
+}
+
+/* Галочка справа */
+.test-option__check {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    animation: popIn 0.2s var(--ease-out) both;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Кнопки действий ── */
+.test-question__actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 480px) {
+    .test-option  { padding: 12px 14px; gap: 10px; }
+    .test-question__actions { justify-content: stretch; }
+    .test-question__actions .test-btn { width: 100%; justify-content: center; }
+}

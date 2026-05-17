@@ -1,0 +1,253 @@
+/* ============================================================
+   test.results.css — экран результатов + общие кнопки теста
+   ============================================================ */
+
+/* ── Общие кнопки теста ── */
+.test-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition),
+        opacity var(--transition);
+}
+
+.test-btn:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.test-btn--primary {
+    background: linear-gradient(135deg, var(--color-primary-mid), var(--color-primary-light));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #fff;
+    box-shadow: var(--shadow-button);
+}
+
+.test-btn--primary:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-button-hover);
+}
+
+.test-btn--primary:not(:disabled):active {
+    transform: none;
+}
+
+.test-btn--ghost {
+    background: rgba(59, 130, 246, 0.07);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+}
+
+.test-btn--ghost:not(:disabled):hover {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: var(--color-border-strong);
+    color: var(--color-text-white);
+    transform: translateY(-2px);
+}
+
+/* Спиннер внутри кнопки */
+.test-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Кнопка «назад» в хедере */
+.test-back-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background var(--transition), color var(--transition);
+}
+
+.test-back-btn:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-text-white);
+}
+
+/* ══════════════════════════════════════
+   Результаты
+══════════════════════════════════════ */
+.test-results {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: cardAppear 0.45s var(--ease-out) both;
+}
+
+/* Шапка результатов */
+.test-results__header {
+    text-align: center;
+    padding-bottom: 4px;
+}
+
+.test-results__icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.test-results__title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    color: var(--color-text-white);
+    margin-bottom: 4px;
+}
+
+.test-results__subtitle {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    font-weight: 300;
+}
+
+/* Блок общего балла */
+.test-results__total {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 20px 24px;
+}
+
+.test-results__total-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.test-results__total-max {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-text-faint);
+}
+
+/* Сетка баллов (переиспользуем из profile.scores.css) */
+.scores-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.score-card {
+    padding: 18px 20px;
+    background: rgba(10, 25, 60, 0.5);
+    border: 1px solid var(--color-border-subtle, rgba(59, 130, 246, 0.14));
+    border-radius: 14px;
+    transition: border-color var(--transition), transform var(--transition);
+}
+
+.score-card:hover {
+    border-color: rgba(59, 130, 246, 0.35);
+    transform: translateY(-2px);
+}
+
+.score-card--blue   { border-top: 2px solid rgba(59,  130, 246, 0.5); }
+.score-card--purple { border-top: 2px solid rgba(139, 92,  246, 0.5); }
+.score-card--teal   { border-top: 2px solid rgba(20,  184, 166, 0.5); }
+.score-card--amber  { border-top: 2px solid rgba(245, 158, 11,  0.5); }
+
+.score-card__body {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.score-card__label {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    line-height: 1.3;
+    max-width: 160px;
+}
+
+.score-card__value {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text-white);
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.score-card__bar-wrap {
+    height: 4px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.score-card__bar {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--color-primary-mid), var(--color-accent));
+    transition: width 0.6s var(--ease-out);
+}
+
+/* Общий балл (переиспользуем из profile) */
+.scores-section__total-label {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.scores-section__total-value {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #e8f0ff 0%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+/* Кнопки */
+.test-results__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.test-results__actions .test-btn--primary { flex: 1; justify-content: center; }
+.test-results__actions .test-btn--ghost   { justify-content: center; }
+
+@media (max-width: 600px) {
+    .scores-grid { grid-template-columns: 1fr; }
+    .test-results__actions { flex-direction: column; }
+    .test-results__actions .test-btn { width: 100%; justify-content: center; }
+    .scores-section__total-value { font-size: 34px; }
+}
