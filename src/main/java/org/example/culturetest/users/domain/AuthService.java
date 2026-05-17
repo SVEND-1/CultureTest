@@ -69,6 +69,7 @@ public class AuthService {
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             cookie.setMaxAge(24 * 60 * 60);
+            cookie.setSecure(false);//ДЛЯ HTTP
             response.addCookie(cookie);
             log.debug("Куки сохранены");
 
@@ -105,7 +106,6 @@ public class AuthService {
             cookie.setHttpOnly(true);
             cookie.setMaxAge(0);
             cookie.setSecure(false);
-            cookie.setDomain("localhost");
             response.addCookie(cookie);
 
             return new SimpleResponse(true, "Успешный выход");
@@ -188,6 +188,7 @@ public class AuthService {
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             cookie.setMaxAge(24 * 60 * 60);
+            cookie.setSecure(false);//ДЛЯ HTTP
             response.addCookie(cookie);
 
             Set<SimpleGrantedAuthority> roles = Collections.singleton(Role.USER.toAuthority());
