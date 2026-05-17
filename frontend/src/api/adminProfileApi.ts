@@ -5,15 +5,14 @@
 import axios from 'axios';
 import type { AdminProfileResponse, UserAI } from '../types/adminProfile/adminProfile.types';
 
-const API_BASE_URL = 'http://62.113.37.103:8080';
 
 const API = axios.create({
-    baseURL: `${API_BASE_URL}/api/admin`,
+    baseURL: `/api/admin`,
     withCredentials: true,
 });
 
 const USERS_API = axios.create({
-    baseURL: `${API_BASE_URL}/api/users`,
+    baseURL: `/api/users`,
     withCredentials: true,
 });
 

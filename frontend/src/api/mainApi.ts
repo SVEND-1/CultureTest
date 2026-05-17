@@ -5,10 +5,9 @@
 import axios from 'axios';
 import type { Test } from '../types/main/main.types';
 
-const API_BASE_URL = 'http://62.113.37.103:8080';
 
 const API = axios.create({
-    baseURL: `${API_BASE_URL}/api/tests`,
+    baseURL: `/api/tests`,
     withCredentials: true,
 });
 

@@ -5,9 +5,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: virtual_world
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: CultureTest
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: svend123
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -64,9 +64,6 @@ services:
     container_name: react-frontend
     ports:
       - "5173:5173"
-    environment:
-      - REACT_APP_API_URL=http://6106779-ee569251.twc1.net/api
-      - REACT_APP_MINIO_URL=http://6106779-ee569251.twc1.net:9000
     depends_on:
       - backend
     networks:

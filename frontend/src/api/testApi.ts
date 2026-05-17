@@ -10,11 +10,9 @@ import type {
     SubmitAnswerRequest,
 } from '../types/test/test.types';
 
-const API_BASE_URL = 'http://62.113.37.103:8080';
-
 /* ── Тесты ── */
 const testsApi = axios.create({
-    baseURL: `${API_BASE_URL}/api/tests`,
+    baseURL: `/api/tests`,
     withCredentials: true,
 });
 
@@ -26,7 +24,7 @@ export const fetchTestById = async (id: number): Promise<TestResponse> => {
 
 /* ── Попытки ── */
 const attemptsApi = axios.create({
-    baseURL: `${API_BASE_URL}/api/test-attempts`,
+    baseURL: `/api/test-attempts`,
     withCredentials: true,
 });
 
@@ -44,7 +42,7 @@ export const finishAttempt = async (attemptId: number): Promise<TestAttemptFinis
 
 /* ── Ответы пользователя ── */
 const answersApi = axios.create({
-    baseURL: `${API_BASE_URL}/api/answer-users`,
+    baseURL: `/api/answer-users`,
     withCredentials: true,
 });
 

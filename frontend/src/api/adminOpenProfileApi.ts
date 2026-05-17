@@ -5,10 +5,10 @@
 import axios from 'axios';
 import type { AdminOpenUserProfile } from '../types/adminOpenProfile/adminOpenProfile.types';
 
-const API_BASE_URL = 'http://62.113.37.103:8080';
+
 
 const API = axios.create({
-    baseURL: `${API_BASE_URL}/api/admin`,
+    baseURL: `/api/admin`,
     withCredentials: true,
 });
 
